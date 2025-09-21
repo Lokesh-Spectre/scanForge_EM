@@ -408,7 +408,7 @@ esp_err_t comms_send_event(comms_event_t event){
         gl_profile.gatts_if,
         gl_profile.conn_id,
         gl_profile.char_handle_ss,
-        sizeof(notify_data),
+        strlen(notify_data),
         (uint8_t*)notify_data,
         false   // false = notify, true = indicate
     );
