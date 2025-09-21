@@ -8,37 +8,26 @@
 void gatts_service_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if, esp_ble_gatts_cb_param_t *param);
 // static void gatts_profile_b_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if, esp_ble_gatts_cb_param_t *param);
 
-#define GATTS_SERVICE_UUID_TEST_A   0x00FF
-#define GATTS_CHAR_UUID_TEST_A      0xFF01
-#define GATTS_DESCR_UUID_TEST_A     0x3333
-#define GATTS_NUM_HANDLE_TEST_A     10
-
+#define GATTS_SERVICE_ATTR_NUM     10
 
 static const uint8_t GATTS_SERVICE_UUID[] = {
-    0xBE, 0xA7, 0xAD, 0xDE, 0x00, 0x00, 0xAE, 0xBA,
-    0xD0, 0xBA, 0x00, 0x00, 0xFE, 0xCA, 0xDE, 0x0C
+    0xA7,0xBE, 0xAD, 0xDE, 0x00, 0x00, 0xBE, 0xBA,
+    0xAD, 0x0B, 0x00, 0x00, 0xFE, 0xCA, 0xDE, 0xC0
 };
 #define GATTS_CHAR_UUID_COMMAND_CONTROL 0xBABE
 #define GATTS_CHAR_UUID_SCANNING_STATUS 0xF00D
 
-#define GATTS_SERVICE_UUID_TEST_B   0x00EE
-#define GATTS_CHAR_UUID_TEST_B      0xEE01
-#define GATTS_CHAR_UUID_TEST_B_2      0xEE02
-#define GATTS_DESCR_UUID_TEST_B     0x2222
-#define GATTS_DESCR_UUID_TEST_B_2     0x4444
-#define GATTS_NUM_HANDLE_TEST_B     4
+static char test_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "scanForge";
 
-static char test_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESP_GATTS_DEMO";
-
-#define TEST_MANUFACTURER_DATA_LEN  17
+// #define TEST_MANUFACTURER_DATA_LEN  17
 
 #define GATTS_DEMO_CHAR_VAL_LEN_MAX 0x40
 
 #define PREPARE_BUF_MAX_SIZE 1024
 
 static uint8_t char1_str[] = {0x11,0x22,0x33};
-static esp_gatt_char_prop_t a_property = 0;
-static esp_gatt_char_prop_t b_property = 0;
+static esp_gatt_char_prop_t command_control_characteristic_property = 0;
+static esp_gatt_char_prop_t scanner_status_characteristic_property = 0;
 
 static esp_attr_value_t gatts_demo_char1_val =
 {
@@ -149,9 +138,7 @@ struct gatts_profile_inst {
 };
 
 /* One gatt-based profile one app_id and one gatts_if, this array will store the gatts_if returned by ESP_GATTS_REG_EVT */
-static struct gatts_profile_inst gl_profile_tab[PROFILE_NUM] = {
-    [PROFILE_A_APP_ID] = {
-        .gatts_cb = gatts_service_event_handler,
-        .gatts_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
-    },
+static struct gatts_profile_inst gl_profile = {
+    .gatts_cb = gatts_service_event_handler,
+    .gatts_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
 };
