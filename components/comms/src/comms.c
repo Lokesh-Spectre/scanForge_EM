@@ -32,7 +32,7 @@ static bool adv_ready = false;
 #define COMMS_COMMAND_BUFFER_LENGTH 20
 
 cmd_buff_t cmd_buffer;
-
+bool is_connected = false;
 comms_cmd_event_handler_t comms_cmd_event_handler= NULL;
 
 void comms_gatt_write_event_handler(cmd_buff_t buffer){
@@ -80,4 +80,8 @@ esp_err_t comms_start_advertising(void){
     
     return esp_ble_gap_start_advertising(&adv_params);
 }
-esp_err_t comms_send_event(comms_event_t event){return ESP_OK;}
+
+
+bool comms_is_connected(){
+    return is_connected;
+}

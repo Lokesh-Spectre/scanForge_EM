@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 #include "esp_err.h"
-
+#include "stdbool.h"
 /**
  * @brief Initialize the BLE stack and GATT server for comms
  * @note Initialize nvs_flash before calling this function
@@ -31,3 +31,4 @@ esp_err_t comms_start_advertising(void);
  */
 esp_err_t comms_send_event(comms_event_t event);
 
+bool comms_is_connected();

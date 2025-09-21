@@ -14,6 +14,7 @@ typedef struct {
     esp_err_t (*init)(comms_cmd_event_handler_t event_handler);   ///< Initialize BLE + register service
     esp_err_t (*activate)(void);                        ///< Start advertising
     esp_err_t (*send)(comms_event_t event);             ///< Send event to Central
+    bool      (*is_connected)();
 } comms_module_t;
 
 /**

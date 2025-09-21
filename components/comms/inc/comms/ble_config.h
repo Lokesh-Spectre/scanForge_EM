@@ -124,17 +124,19 @@ struct gatts_profile_inst {
     uint16_t service_handle;
     esp_gatt_srvc_id_t service_id;
     
-    uint16_t char_handle;
-    esp_bt_uuid_t char_uuid;
+    uint16_t char_handle_cc;
+    esp_bt_uuid_t char_uuid_cc;
     esp_gatt_perm_t perm;
     esp_gatt_char_prop_t property;
-    uint16_t descr_handle;
-    esp_bt_uuid_t descr_uuid;
 
-    uint16_t char_handle_2;
-    esp_bt_uuid_t char_uuid_2;
-    uint16_t descr_handle_2;
-    esp_bt_uuid_t descr_uuid_2;
+    uint16_t descr_handle_cc;
+    esp_bt_uuid_t descr_uuid_cc;
+
+    uint16_t char_handle_ss;
+    esp_bt_uuid_t char_uuid_ss;
+
+    uint16_t descr_handle_ss;
+    esp_bt_uuid_t descr_uuid_ss;
 };
 
 /* One gatt-based profile one app_id and one gatts_if, this array will store the gatts_if returned by ESP_GATTS_REG_EVT */
@@ -142,3 +144,5 @@ static struct gatts_profile_inst gl_profile = {
     .gatts_cb = gatts_service_event_handler,
     .gatts_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
 };
+
+extern bool is_connected;

@@ -1,7 +1,8 @@
 #include "comms.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
-
+// #include "freeRTOS/timers.h"
+#include "freertos/FreeRTOS.h"
 static char* TAG = "SF_APP";
 
 void comms_event_handler(comms_cmd_t event){
@@ -34,5 +35,23 @@ void app_main(){
     
     comms.init(comms_event_handler);
     comms.activate();
-    
+    int x =0;
+    while(1){
+        
+        if(comms.is_connected()){
+            switch (x%3){
+                case 0:
+                    comms.send(COMMS_EVENT_SHOOT);
+                    break;
+                case 1:
+                    comms.send(COMMS_EVENT_END);
+                    break;
+                case 2:
+                    comms.send(COMMS_EVENT_STOPPED);
+                    break;
+            }
+            x++;
+        }
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
 }
